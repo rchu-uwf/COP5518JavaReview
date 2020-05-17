@@ -10,7 +10,7 @@ https://youtu.be/xvXbvrUUGMM
 class Hi implements Runnable {
     public void run() {
         for (int i = 1; i <= 5; ++i) {
-            System.out.println("Hi");
+            System.out.println("Hi " + Thread.currentThread().getPriority());
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -23,7 +23,7 @@ class Hi implements Runnable {
 class Hello implements Runnable {
     public void run() {
         for (int i = 1; i <= 5; ++i) {
-            System.out.println("Hello");
+            System.out.println("Hello " + Thread.currentThread().getPriority());
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -39,8 +39,8 @@ public class ThreadDemo {
         Runnable obj1 = new Hi();
         Runnable obj2 = new Hello();
 
-        Thread t1 = new Thread(obj1,"Hi thread");
-        Thread t2 = new Thread(obj2,"Hello thread");
+        Thread t1 = new Thread(obj1, "Hi thread");
+        Thread t2 = new Thread(obj2, "Hello thread");
 
         t1.start();
         try {
@@ -50,8 +50,13 @@ public class ThreadDemo {
         }
         t2.start();
 
+        t1.setPriority(Thread.MIN_PRIORITY);
+        t2.setPriority(Thread.MAX_PRIORITY);
+
         System.out.println("Thread name: " + t1.getName());
         System.out.println("Thread name: " + t2.getName());
+        System.out.println("Thread t1 priority: " + t1.getPriority());
+        System.out.println("Thread t2 priority: " + t2.getPriority());
 
         /*
         This video describes isAlive and the join() method:
